@@ -1,11 +1,8 @@
 ---
 layout: post
-title: Attention is all you need - and open source!
-tags:
-  - transformers
-  - llms
-  - ai
-  - open-source
+title: Attention is all you need - and open source!"
+tags: [AI, LLMs, Open-source]
+comments: false
 ---
 
 # Attention is all you need - and open source!
