@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Attention is all you need - and open source!"
+title: "Attention and open source is all you need"
 tags: [AI, LLMs, Open-source]
 comments: false
 ---
 
-# Attention is all you need - and open source!
+# Attention is all you need - and open source
 
 
 ## A topic of great impact
