@@ -5,9 +5,6 @@ tags: [AI, LLMs, Open-source]
 comments: false
 ---
 
-# Attention is all you need - and open source
-
-
 ## A topic of great impact
 
 In 2017, a paper titled [Attention is all you need](https://papers.nips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html) by eight Google researchers marked the first brick of the (maybe still not complete) house on which a big part of present-days AI is built. 
