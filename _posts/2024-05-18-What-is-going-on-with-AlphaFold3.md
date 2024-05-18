@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "What is going on with AlphaFold3?"
-tags: [AI, LLMs, Databases]
+tags: [AI, Proteins, Open-Science]
 comments: false
 ---
 
