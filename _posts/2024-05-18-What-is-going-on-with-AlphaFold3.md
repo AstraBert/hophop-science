@@ -9,9 +9,9 @@ comments: false
 
 ![_config.yml]({{ site.baseurl }}/images/Protein_Structure.png)
 
-On 8th May, Google Deepmind and Isomorphic Labs introduced the world to their new tool from protein structure prediction, which is AlphaFold3, a more powerful version of the already existent AlphaFold2, with which Google Deepmind had already reconstructed more than 200 millions protein structures (almost every known protein) and crashed the *a priori protein structure prediction* challenge that had been chasing Bioinformaticists for decades (I talked about it in more detail [here](https://astrabert.github.io/hophop-science/AI-predicts-proteins-and-edits-DNA/)).
+On 8th May 2024, Google Deepmind and Isomorphic Labs introduced the world to their new tool for protein structure prediction, **AlphaFold3**, a more powerful version of the already existent AlphaFold2, with which Google Deepmind had already reconstructed more than 200 millions protein structures (almost every known protein) and crashed the *a priori protein structure prediction* challenge that had been chasing Bioinformaticians for decades (I talked about it in more detail [here](https://astrabert.github.io/hophop-science/AI-predicts-proteins-and-edits-DNA/)).
 
-Are we on the verge of another revolution? Is AlphaFold3 really a game changer as its predecessor was in 2021? In this blog post, we'll explore the potential breakthroughs and new applications, as well as some limitations that the authors themselves recognized. 
+Are we on the verge of another revolution? Is AlphaFold3 really a game changer as its predecessor was? In this blog post, we'll explore the potential breakthroughs and new applications, as well as some limitations that the authors themselves recognized. 
 
 ## What's new?
 
@@ -23,19 +23,19 @@ Let's break this down, so that Biologists can understand AI concepts and AI Scie
 
 ### 0. Let's introduce some terminology
 #### 0a. For the Biologists
-* **Machine Learning**: Machine Learning is the process with which computers *learn* to abstract from some data they have not based on some human-made instructions, but on advanced statistical and mathematical models
+* **Machine Learning**: Machine Learning is the process with which computers *learn* to abstract from some data they have not based on human-made instructions, but on advanced statistical and mathematical models
 * **Deep Learning**: Deep Learning is a Machine Learning framework which is prominently designed on Neural Networks and uses a brain-like architecture to learn.
 * **Neural Network**: A Neural Network is somewhat like a network of neurons in the brain, even though much more simpler: in this sense, there are several checkpoints (the neurons), connected with one another, that receive and pass the information if they reach an activation threshold, exactly as it happens with the action potential of a real neural cell.
 
 #### 0b. For the AI Scientists
 * **Protein**: Proteins are biomolecules of varying size, made up by little building blocks known as amino acids. They are the _factotum_ of a cell: if you are to imagine a cell as a city, proteins actually represent the transportation system, the communication web, the police, the factory workers... A protein has a primary (flat chain), secondary (mostly 3D but sparse) and tertiary (3D and ordered) structure.
-* **Ligand**: A ligand is something that _binds_ something else: in the context of proteins, it can be an neuro-hormonal signal (like adrenaline) that binds with its receptor.
+* **Ligand**: A ligand is something that _binds_ something else: in the context of proteins, it can be a neuro-hormonal signal (like adrenaline) that binds its receptor.
 * **Nucleic Acids**: Nucleic acids (DNA and RNA) are the biomolecules that contain the information about the living system: they are written in a universal language, defined by their building blocks (the nucleotides), and they can be translated into proteins. Thinking of the city example we made before, they could be represented as the Administration Service of it. Nucleic acids often interact with proteins.  
 
 ### 1. The diffusion architecture
-For *diffusion* we mean that application of generative AI that is able to create images from a text prompt. The idea behind diffusion is perfectly suitable for the problem of protein structure prediction, as it is a text-based task: indeed, even though the 3D structure of a protein could see completely unrelated to its 1D amino-acidic chain, there is actually a stronger link than anyone could think of. At the end of the day, indeed, all of the 3D interactions among amino-acids are already defined by their order in the primary chain. 
+For *diffusion* we mean that application of generative AI that is able to create images from a text prompt. The idea behind diffusion is perfectly suitable for the problem of protein structure prediction, as it is a text-based task: indeed, even though the 3D structure of a protein could seem completely unrelated to its 1D amino-acidic chain, there is actually a stronger link than anyone could think of. At the end of the day, indeed, all of the 3D interactions among amino-acids are already defined by their order in the primary chain. 
 
-The diffusion architecture in AlphaFold3 receives raw atom coordinates, meaning that, after the first prediction steps coming from set of neural networks blocks (similar but not equal to those of AlphaFold2), the model is able to turn a "fuzzy" image, with lots of positional and stereochemical noise, to a well-defined and sharp structure. The big advantage of the diffusion model is that it is able to predict the local structure even if the upstream network is not sure about the correct amino-acidic coordinates: this is achieved thanks to the generative process, which is able to produce a distribution of answers that capture most of the possible variability in the protein structure.
+The diffusion architecture in AlphaFold3 receives raw atom coordinates, meaning that, after the first prediction steps coming from a set of neural networks blocks (similar but not equal to those of AlphaFold2), the model is able to turn a "fuzzy" image, with lots of positional and stereochemical noise, to a well-defined and sharp structure. The big advantage of the diffusion model is that it is able to predict the local structure even if the upstream network is not sure about the correct amino-acidic coordinates: this is achieved thanks to the generative process, which is able to produce a distribution of answers that capture most of the possible variability in the protein structure.
 
 As every generative model, also AlphaFold3 diffusion one is prone to hallucination: this is particularly true when it comes to unstructured regions of a protein (that lack a defined and stable tertiary structure), and the AlphaFold3 diffusion blocks are trained in such a way that, in those regions, they produce randomly coiled chains of amino-acids, as done by AlphaFold-Multimeter v2.3 (which generated the images used for hallucination correction training).
 
@@ -60,12 +60,19 @@ As the authors of the paper reported, they are aware of three big limitations:
 2. Clashing atoms: there is a tendency, especially with >100 nucleotides nucleic acids interacting with >2000 amino acids proteins, to overlap atoms in the same space region (which is not actually possible).
 3. Hallucinations, as discussed before, can still happen, so an intrinsic ranking system has been introduced to help the model trashing the hallucinated structures.
 4. There are still some tasks, such as Antigen-Antibody prediction, where AlphaFold3 can improve. The authors observed improvements when the diffusion models is given more seeds (up to 1000), i.e. a series of numbers that "instruct" the model on how to generate an image, whereas no substantial advancement with more stable diffusion samples.
+5. As for all protein-prediction models, proteins are predicted in their "static" form, and not "in action", when they are dynamically inserted into a living cell.
 
 ## Conclusion and open questions
 
 AlphaFold3 definitely represents a breakthrough in Protein Sciences: still, we are not at an arrival point.
-This model represents the kick-off of the new generative AI approach to complex biological problems, which we saw also with OpenCRISPR: on one hand, this holds incredible potential but, on the other, the risk is that we are going to decrease the explainability of our models, leaving scientist with some model-generated accuracy metrics that are not necessarily able to tell them *why* a protein has a certain structure and not another. 
 
-Another really important topic is that AlphaFold3 is not completely open-source: there is an online-server provided by Google, but the code, as stated in the paper, is not given (except for some mock code that simulates the architecture). This poses a big ethical question: are we sure that we want a world were the access to advanced scientific tools is protected by strict license and not everyone can see what is actually going on in softwares by accessing their code? 
+This model marks the kick-off of the new generative AI approach to complex biological problems, which we also saw with OpenCRISPR: on one hand, this holds incredible potential but, on the other, the risk is that we are going to decrease the explainability of our models, leaving scientist with some auto-generated accuracy metrics that are not necessarily able to tell them *why* a protein has a certain structure. 
 
-And, more importantly now than ever, we must ask ourselves: are we really going to rely on AI to design our drugs, deliver targeted genome editing and cure diseases? 
+Another really important topic is that AlphaFold3 is not completely open-source: there is an online-server provided by Google, but the code, as stated in the paper, is not given (except for some mock code that simulates the architecture). This poses a big ethical question: are we sure that we want a world were the access to advanced scientific tools is protected by strict licenses and not everyone can see what is actually going on in softwares by accessing their code? 
+
+And, more importantly now than ever, we must ask ourselves: are we really going to rely on non fully open-source AI to design our drugs, deliver targeted genome editing and cure diseases? 
+
+## References
+
+- Abramson, J., Adler, J., Dunger, J. et al. Accurate structure prediction of biomolecular interactions with AlphaFold 3. Nature (2024). https://doi.org/10.1038/s41586-024-07487-w
+- Cozzolino F, Iacobucci I, Monaco V, Monti M. Protein-DNA/RNA Interactions: An Overview of Investigation Methods in the -Omics Era. J Proteome Res. 2021;20(6):3018-3030. doi:10.1021/acs.jproteome.1c00074
