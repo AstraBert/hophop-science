@@ -55,3 +55,9 @@ Despite the promising perspectives, there are still some obstacles we need to ov
 ## Conclusion
 
 Organoid Intelligence is undoubtedly the forefront of biocomputing, which will be able to revolutionize the way we understand and (probably) even think of our brain, unlocking novel and unexpected discoveries on how we learn notions and shape our memory. On the other hand, it will provide a powerful hardware, which will capture huge conceptual, computational and representational power in small brain-like engines, reducing learning times and expenses for our new AI models. All of this, obviously, is subjected to the condition that we invest resources and time in building new organoids, algorithms and data facilities: the future of _brAIn_ is close, we just need to put some effort to reach it. 
+
+## References
+
+- Cai, H., Ao, Z., Tian, C. et al. Brain organoid reservoir computing for artificial intelligence. Nat Electron 6, 1032–1039 (2023). https://doi.org/10.1038/s41928-023-01069-w
+- Tozer L, ‘Biocomputer’ combines lab-grown brain tissue with electronic hardware, https://www.nature.com/articles/d41586-023-03975-7
+- Smirnova L, Caffo BS, Gracias DH, Huang Q, Morales Pantoja IE, Tang B, Zack DJ, Berlinicke CA, Boyd JL, Harris TD, Johnson EC, Kagan BJ, Kahn J, Muotri AR, Paulhamus BL, Schwamborn JC, Plotkin J, Szalay AS, Vogelstein JT, Worley PF and Hartung T. Organoid intelligence (OI): the new frontier in biocomputing and intelligence-in-a-dish. Front Sci (2023) 1:1017235. doi: 10.3389/fsci.2023.1017235
