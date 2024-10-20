@@ -1,0 +1,18 @@
+- https://www.forbes.com/sites/bethkindig/2024/06/20/ai-power-consumption-rapidly-becoming-mission-critical/
+- https://engineering.fb.com/2024/03/12/data-center-engineering/building-metas-genai-infrastructure/
+- https://hbr.org/2024/07/the-uneven-distribution-of-ais-environmental-impacts
+- https://news.microsoft.com/2019/02/22/exxonmobil-to-increase-permian-profitability-through-digital-partnership-with-microsoft/
+- https://arxiv.org/abs/2304.03271
+- https://www.bbc.com/news/articles/c51yvz51k2xo
+- https://www.theguardian.com/environment/2024/sep/20/three-mile-island-nuclear-plant-reopen-microsoft
+- https://www.aboutamazon.com/news/sustainability/amazon-nuclear-small-modular-reactor-net-carbon-zero
+- https://blog.google/outreach-initiatives/sustainability/google-kairos-power-nuclear-energy-agreement/
+- https://en.m.wikipedia.org/wiki/Energy_density_Extended_Reference_Table
+- https://world-nuclear.org/information-library/current-and-future-generation/nuclear-power-in-the-world-today
+- https://world-nuclear.org/nuclear-essentials/what-is-nuclear-waste-and-what-do-we-do-with-it
+- https://www.energypolicy.columbia.edu/the-uncertain-costs-of-new-nuclear-reactors-what-study-estimates-reveal-about-the-potential-for-nuclear-in-a-decarbonizing-world/
+- https://www.statista.com/statistics/712841/median-construction-time-for-reactors-since-1981/
+- https://www.energy.gov/ne/benefits-small-modular-reactors-smrs
+- https://news.stanford.edu/stories/2022/05/small-modular-reactors-produce-high-levels-nuclear-waste
+- https://www.technologyreview.com/2024/07/17/1095019/google-amazon-and-the-problem-with-big-techs-climate-claims/
+- 
