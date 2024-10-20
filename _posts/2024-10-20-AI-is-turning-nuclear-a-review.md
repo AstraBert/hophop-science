@@ -102,5 +102,5 @@ So, in conclusion: are big techs really interested in the decarbonizing potentia
 
 ### References
 
-See the references for this article [here](https://raw.githubusercontent.com/AstraBert/hophop-science/main/images/references_2024_20_10.txt
+See the references for this article [here](https://raw.githubusercontent.com/AstraBert/hophop-science/master/images/references_2024_20_10.txt
 )
