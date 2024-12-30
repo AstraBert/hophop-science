@@ -615,7 +615,7 @@ iface.launch(server_name="0.0.0.0", server_port=7860)
 
 ## Getting the app up and running
 
-To get the app up and running, you first of all should install all the necessary dependencies:
+To get the app **up and running**, you first of all should install all the _necessary dependencies_:
 
 ```bash
 # Get the requirements file
