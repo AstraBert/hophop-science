@@ -5,7 +5,6 @@ tags: [AI, Debate, Open-Source]
 comments: false
 ---
 
-# Debate Championship For LLMs
 
 > _5 LLMs, 1vs1 matches to produce the most convincing argumentation in favor or against a random motion. Oh, and also the debate judge is an LLM :)_
 
@@ -239,12 +238,12 @@ for judge in judges:
   print("Done with " + judge + " being a judge")
 ```
 
-The collected data were then saved into a CSV file which was uploaded as [a dataset on HuggingFace hub](https://huggingface.co/datasets/as-cle-bert/DebateLLMs). 
+The collected data were manually annotated ([_Code reference_]()), saved to a CSV file and uploaded as [a dataset on HuggingFace hub](https://huggingface.co/datasets/as-cle-bert/DebateLLMs). 
 
 
 ### 2d. Post-Tournament Analysis
 
-> _Code reference: [DebateLLMChampionship_analysis.ipynb](https://github.com/AstraBert/DebateLLM-Championship/blob/main/DebateLLMChampionship_analysis.ipynb)_
+> _Code references: [DebateLLMChampionship_analysis.ipynb](https://github.com/AstraBert/DebateLLM-Championship/blob/main/DebateLLMChampionship_analysis.ipynb) and [MotionCategoriesAssociations.ipynb](https://github.com/AstraBert/DebateLLM-Championship/blob/main/MotionCategoriesAssociations.ipynb)_
 
 Post-tournament analysis involved:
 
@@ -252,6 +251,8 @@ Post-tournament analysis involved:
 2. Repeating the same analysis at 1. with `Llama-3.3-70B-Instruct` as a judge
 3. Repeating the same analysis at 1. with `Phi-3.5-mini-instruct` winning arguments 
 4. Repeating the same analysis at 1. with with `HuggingFaceH4/starchat2-15b-v0.1` losing arguments 
+
+We also carried out topic association analysis for winning arguments with `QwQ-32B-Preview` and `Llama-3.3-70B-Instruct` as judges, as well as the same analysis for `Phi-3.5-mini-instruct` winning arguments and `HuggingFaceH4/starchat2-15b-v0.1` losing arguments.
 
 These are the general functions defined for the analysis:
 
@@ -389,7 +390,7 @@ def extract_most_common_words(text: str, n: int) -> List[str]:
     return [word for word, _ in Counter(words).most_common(n)]
 ```
 
-## 3. Results and Discussion
+## 3. Results and Conclusions
 
 ### 3a. Tournament Results
 
@@ -403,16 +404,27 @@ In the third position we had `starchat2-15b-v0.1`, with 2 overall victories.
 
 _**Fig 1**: Tournament podium_
 
-### 3b. Post-Tournament Analysis Results
+### 3b. Favor and Against Winning Cases Distribution
+
+> _Code reference: [DebateLLMChampionship_analysis.ipynb](https://github.com/AstraBert/DebateLLM-Championship/blob/main/DebateLLMChampionship_analysis.ipynb)_
 
 We first evaluated the "Favor" vs "Against" tendency for the two judges when deciding the winning arguments:
 
 - `QwQ-32B-Preview` chose 5 times "Favor" and 5 times "Against"
 - `Llama-3.3-70B-Instruct` chose 7 times "Favor" and 3 times "Against"
 
+We repeated the same analysis for the cases in which `Phi-3.5-mini-instruct` was the winner and for those in which `starchat2-15b-v0.1` was the loser:
+
+- `Phi-3.5-mini-instruct` won 3 time as "Favor" and 2 times as "Against"
+- `starchat2-15b-v0.1` lost only when being "Against" the motion (and won twice while being in the "Favor" position and once while being "Against")
+
+### 3c. Overlapping between Key Words in Motions and Arguments
+
+> _Code reference: [DebateLLMChampionship_analysis.ipynb](https://github.com/AstraBert/DebateLLM-Championship/blob/main/DebateLLMChampionship_analysis.ipynb)_
+
 We evaluated the overlapping score between the keywords in the motions and the keywords in the winning arguments in various settings:
 
-- We evidenced broad variation of overlapping scores both with `QwQ-32B-Preview` and with `Llama-3.3-70B-Instruct` as judge. Both the variation ranges were comparable, with the one in the winning arguments from `Llama-3.3-70B-Instruct` being slightly narrower (Fig 2a-b)
+- We evidenced broad variation of overlapping scores both with `QwQ-32B-Preview` and with `Llama-3.3-70B-Instruct` as judges. Both the variation ranges were comparable, with the one in the winning arguments from `Llama-3.3-70B-Instruct` being slightly narrower (Fig 2a-b)
 - The overlapping scores for the winning prompts from `Phi-3.5-mini-instruct` were comparable with the ones registered for the previous point, but the variation was far broader than the one found for the losing prompts by `starchat2-15b-v0.1` (Fig 2c-d)
 
 ![_config.yml]({{ site.baseurl }}/images/qwen_judge.png)
@@ -431,11 +443,83 @@ _**Fig 2c**: Overlapping scores between the keywords in the motions and the keyw
 
 _**Fig 2d**: Overlapping scores between the keywords in the motions and the keywords in the winning arguments distributions for losing arguments by starchat2-15b-v0.1_
 
+> **TAKEAWAY**: _Although results do not converge onto a single explanation, we could say that a high overlap score does not necessary help in winning, but that a low overlap score may have an influence on losing the match_
 
-<!--Add data on length and correlation and explanations-->
+We also evaluated the correlation among argument length (in words) and keyword overlapping score: while for overall winning arguments with both `QwQ-32B-Preview` and `Llama-3.3-70B-Instruct` as judges there is no significant correlation, Fig 3a-b highlight that there is a stronger positive correlation for `Phi-3.5-mini-instruct` winning argument and a stronger negative correlation for `starchat2-15b-v0.1` losing arguments. 
+
+
+![_config.yml]({{ site.baseurl }}/images/phi3-winning-corr.png)
+
+_**Fig 3a**: Correlation between keyword overlapping scores and argument length for winning arguments by Phi-3.5-mini-instruct_
+
+![_config.yml]({{ site.baseurl }}/images/starchat-losing-corr.png)
+
+_**Fig 3b**: Correlation between keyword overlapping scores and argument length for losing arguments by starchat2-15b-v0.1_
+
+> **TAKEAWAY**: _This correlation study might point at the fact that `starchat2-15b-v0.1` was not able to maintain adherence to the original motion when producing longer arguments, and that might have lead to losing the matches. The ability of maintaining a broader correspondence to the original motion when producing longer arguments might, on the other hand, have influenced `Phi-3.5-mini-instruct` victories._
+
+### 3d. Motion Topics and Winning Arguments Correlation
+
+> _Code reference: [MotionCategoriesAssociations.ipynb](https://github.com/AstraBert/DebateLLM-Championship/blob/main/MotionCategoriesAssociations.ipynb)_
+
+We lastly evaluated what positions ("Favor" or "Against") were deemed winning in correlation to the topic of their motions.
+
+First of all, we accounted for potential "personal opinion" influence (i.e. a bias in the LLM) in the choice of the winner, using `gpt-4o-mini` to detect these biases and report them along with the expressions that contained "personal opinions" from the judge. We then build Table 1:
+
+| Judge | Topic | Position | Influenced | Quotes |
+|--------|--------|-----------|------------|---------|
+| Qwen/QwQ-32B-Preview | Prisoners Extradition | Against | False | |
+| Qwen/QwQ-32B-Preview | Oppose Chinese censorship | Favor | True | The argument in favor is stronger because it emphasizes human rights, freedom of expression, and the need for a balanced approach to social stability. It aligns with international standards and promotes a more inclusive society. |
+| Qwen/QwQ-32B-Preview | Democratization of UN | Favor | False | |
+| Qwen/QwQ-32B-Preview | Non-violent movements not leading social change | Against | False | |
+| Qwen/QwQ-32B-Preview | West funding a coup in Myanmar | Against | False | |
+| Qwen/QwQ-32B-Preview | Stop to Bullfighting | Favor | True | The argument in favor of banning bullfighting is stronger due to its emphasis on ethical considerations. |
+| Qwen/QwQ-32B-Preview | Paper is better than Internet | Against | False | |
+| Qwen/QwQ-32B-Preview | Ban to self-diagnose websites | Favor | True | The potential for misdiagnosis and delayed treatment poses significant risks to public health. Privacy concerns further underscore the need for regulation or prohibition of these websites to ensure that individuals receive accurate and safe healthcare information and treatment. |
+| Qwen/QwQ-32B-Preview | Public workers have right to strike | Against | False | |
+| Qwen/QwQ-32B-Preview | Hedge funds not purchasing sovereign debt | Favor | False | |
+| meta-llama/Llama-3.3-70B-Instruct | Trade Unions slow progress | Favor | False | |
+| meta-llama/Llama-3.3-70B-Instruct | Cancel 3rd World Debt | Favor | False | |
+| meta-llama/Llama-3.3-70B-Instruct | Deny terminally ill patients cures | Against | True | the argument in favor was unable to present a coherent or convincing case. |
+| meta-llama/Llama-3.3-70B-Instruct | Prioritized skilled refugees to enter EU | Against | True | a humanitarian-focused approach is more aligned with principles of fairness and equality |
+| meta-llama/Llama-3.3-70B-Instruct | Repatriate North Korean refugees | Against | True | the moral and legal imperative to protect refugees' lives and freedoms takes precedence. |
+| meta-llama/Llama-3.3-70B-Instruct | Not replace workers with technology | Favor | False | |
+| meta-llama/Llama-3.3-70B-Instruct | Two parliaments: politicians and experts | Favor | True | The argument in favor presents a more compelling case the benefits of integrating experts into the legislative process seem to outweigh the drawbacks. |
+| meta-llama/Llama-3.3-70B-Instruct | Handmade gifts better than brand gifts | Favor | True | The argument in favor presented a more compelling case highlighting the emotional value, personalization, and shared experiences that handmade gifts offer, which outweigh the potential drawbacks mentioned by the argument against. |
+| meta-llama/Llama-3.3-70B-Instruct | Do not entrap pedophiles | Favor | False | |
+| meta-llama/Llama-3.3-70B-Instruct | Home-country trials for Guantanamo detainees | Favor | False | |
+
+_**Table 1**: Potential influence of judge's "personal opinion" in choosing the winner_
+
+
+Table 1 highlights that `QwQ-32B-Preview` showed "personal opinion" influence in 30% of the cases, whereas `Llama-3.3-70B-Instruct` in 50% of them: the difference might rely in the intrinsic reasoning structure that `QwQ-32B-Preview` has, which might help avoiding bias-fed pitfalls in the judgement.
+
+From Table 1 we can also see that both judges choose winning positions (except in few cases) that align with more liberal/left-leaning positions, which might be due to the political "bias" of LLMs, that all seem to align to libera/left-wing/social-democratic views ([Rozado, 2024](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0306621)). To better asses the political leaning of our LLMs, we performed the political compass test on `Llama-3.3-70B-Instruct` (judge), `Phi-3.5-mini-instruct` and `starchat2-15b-v0.1` (the winner and the loser of the tournament) (Fig 4).
+
+![_config.yml]({{ site.baseurl }}/images/political_compass.png)
+
+_**Fig 4**: Political compass of the three evaluated LLMs_
+
+
+The political compass gives insight on left-leaning, libertarian positions for the three evaluated LLMs: this might mean that the judges positions in the choice of the were influenced by an internal political bias. The intrinsic political leaning of the models may have influenced also the winning chances for `Phi-3.5-mini-instruct` and `starchat2-15b-v0.1` (Table 2):
+
+| Model                               | Position   | Topics                                                                                                   |
+|-------------------------------------|------------|----------------------------------------------------------------------------------------------------------|
+| microsoft/Phi-3.5-mini-instruct   (winning)  | Against    | West funding a coup in Myanmar, Repatriate North Korean refugees                                         |
+| microsoft/Phi-3.5-mini-instruct  (winning)   | Favor      | Ban to self-diagnose websites, Handmade gifts better than brand gifts, Do not entrap pedophiles         |
+| HuggingFaceH4/starchat2-15b-v0.1  (losing)  | Against    | Democratization of UN, Stop to Bullfighting, Ban to self-diagnose websites, Not replace workers with technology, Handmade gifts better than brand gifts |
+| HuggingFaceH4/starchat2-15b-v0.1  (losing)  | Favor      | None                                                                                                    |
+
+
+As you can see, `starchat2-15b-v0.1` needed to defend the position _against_ several issues that are generally supported by liberal/left-wing political views: in this sense, the model might have hard a hard time generating a valid argument. 
+
+On the other side, all the positions that `Phi-3.5-mini-instruct` had to defend were aligned with its political views, making it easier for thr LLM to generate convincing and winning arguments.
+
+> **TAKEAWAY**: _There might be a correlation between the political leanings of the LLMs and their preferences in winner choice/ability to generate convincing arguments_
+ 
 
 ## 4. Data and Code Availability
 
-The code is available for reproduction as [AstraBert/DebateLLM-Championship](https://github.com/AstraBert/DebateLLM-Championship) GitHub repo. The code is structured as two Google Colab notebooks that execute the code reported in this blog post.
+The code is available for reproduction as [AstraBert/DebateLLM-Championship](https://github.com/AstraBert/DebateLLM-Championship) GitHub repo. The code is structured as three Google Colab notebooks that execute the code reported in this blog post.
 
 The collected debate data are available as [as-cle-bert/DebateLLMs](https://huggingface.co/datasets/as-cle-bert/DebateLLMs) on HuggingFace Hub. 
